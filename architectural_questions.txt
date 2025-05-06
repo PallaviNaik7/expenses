@@ -1,0 +1,23 @@
+1) How to implement Type Checking for Database Fields
+-- To handle database related operations like connections and pool it's advisable to use and ORM
+-- ORM type TypeORM which is designed for typescript and javascript based application can be used to strictly check the database types
+-- Besides database layer like postgres checks the type of the input before inserting, but this would mean you are passing the corrupted data
+at database layer instead of avoiding it at service layer
+-- Additionally at service layer one could check the type of the variable using typeOf 
+
+2)Strategy to preventing Duplicate Data entry in DB on Concurrent API Calls
+
+-- One way to prevent duplicate entries in database is to have a unique index on some of the columns. This will prevent inserting duplicate
+records for that column
+-- When writting insert queries instead of writing plain `insert query` one could use `insert on conflict update do nothing query`
+-- 
+
+3) When website goes to maintenance, how to handle currently active users in the
+system, so that there is no loss of data.
+
+-- If the website is up for maintenance, it's advisable to disable any CRUD operations on the website, and notify the user that website is under 
+maintenance
+
+--But if the system is down, and stopping user operation is not possible, then the service architecture should be such that the requests
+are queued (AWS FIFO queue or Kafka) and can be processed later when the system is healthy
+
