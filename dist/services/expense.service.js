@@ -35,7 +35,7 @@ function getAllExpenses() {
             const serviceError = new Error(`Failed to fetch all expenses`);
             serviceError.statusCode = 500;
             serviceError.displayMessage = "Error occured while retriveing expenses";
-            serviceError.originalError = error.message ? error.message : "";
+            serviceError.originalError = error.message ? error.message : "Error occured while retriveing expenses";
             throw serviceError;
         }
     });
@@ -57,9 +57,9 @@ function addAnExpense(expense) {
         catch (error) {
             serviceError.statusCode = 500;
             serviceError.displayMessage = "Error occured while adding an expense";
-            serviceError.originalError = error.message ? error.message : "";
+            serviceError.originalError = error.message ? error.message : "Error occured while adding an expense";
             if (serviceError.errorType == 1) {
-                serviceError.statusCode = 401;
+                serviceError.statusCode = 400;
                 serviceError.displayMessage = `Missing required fields: amount, category, and date`;
                 serviceError.originalError = `Missing required fields: amount, category, and date`;
             }
@@ -77,11 +77,12 @@ function deleteAnExpense(expenseId) {
             const serviceError = new Error(`Failed to delete an expense`);
             serviceError.statusCode = 500;
             serviceError.displayMessage = "Error occured while deleting an expense";
-            serviceError.originalError = error.message ? error.message : "";
+            serviceError.originalError = error.message ? error.message : "Error occured while deleting an expense";
             throw serviceError;
         }
     });
 }
+// Added validation for request body
 function updateExpenseAmount(expense, expenseId) {
     return __awaiter(this, void 0, void 0, function* () {
         const serviceError = new Error(`Failed to update an expense`);
@@ -95,9 +96,9 @@ function updateExpenseAmount(expense, expenseId) {
         catch (error) {
             serviceError.statusCode = 500;
             serviceError.displayMessage = "Error occured while updating an expense";
-            serviceError.originalError = error.message ? error.message : "";
+            serviceError.originalError = error.message ? error.message : "Error occured while updating an expense";
             if (serviceError.errorType == 1) {
-                serviceError.statusCode = 401;
+                serviceError.statusCode = 400;
                 serviceError.displayMessage = `Missing required fields: amount`;
                 serviceError.originalError = `Missing required fields: amount`;
             }

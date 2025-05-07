@@ -17,10 +17,11 @@ const router = (0, express_1.Router)();
 router.get('/expenses', auth_middleware_1.authenticate, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const expenses = yield (0, expense_service_1.getAllExpenses)();
-        res.status(200).json(expenses);
+        res.status(200).json({ message: { expenses: expenses } });
     }
     catch (error) {
-        res.status(500).json({ message: error });
+        let statusCode = error.statusCode ? error.statusCode : 500;
+        res.status(statusCode).json({ message: error });
     }
 }));
 router.post('/expense', auth_middleware_1.authenticate, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -29,7 +30,8 @@ router.post('/expense', auth_middleware_1.authenticate, (req, res) => __awaiter(
         res.status(201).json({ message: { expenseId: expense.id } });
     }
     catch (error) {
-        res.status(500).json({ message: error });
+        let statusCode = error.statusCode ? error.statusCode : 500;
+        res.status(statusCode).json({ message: error });
     }
 }));
 router.delete('/expense/:expenseId', auth_middleware_1.authenticate, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -38,7 +40,8 @@ router.delete('/expense/:expenseId', auth_middleware_1.authenticate, (req, res) 
         res.status(200).json({ message: `Expense with amount: ${expense.amount}, category: ${expense.category} and date: ${expense.date} deleted successfully` });
     }
     catch (error) {
-        res.status(500).json({ message: error });
+        let statusCode = error.statusCode ? error.statusCode : 500;
+        res.status(statusCode).json({ message: error });
     }
 }));
 router.patch('/expense/:expenseId', auth_middleware_1.authenticate, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -47,7 +50,8 @@ router.patch('/expense/:expenseId', auth_middleware_1.authenticate, (req, res) =
         res.status(200).json({ message: `Expense amount updated successfully` });
     }
     catch (error) {
-        res.status(500).json({ message: error });
+        let statusCode = error.statusCode ? error.statusCode : 500;
+        res.status(statusCode).json({ message: error });
     }
 }));
 exports.default = router;

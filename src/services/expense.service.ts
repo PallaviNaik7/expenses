@@ -35,7 +35,7 @@ export async function getAllExpenses(): Promise<Expense[]> {
 
         serviceError.statusCode = 500
         serviceError.displayMessage = "Error occured while retriveing expenses"
-        serviceError.originalError = error.message ? error.message : ""
+        serviceError.originalError = error.message ? error.message : "Error occured while retriveing expenses"
         throw serviceError
     }
 
@@ -55,10 +55,10 @@ export async function addAnExpense(expense: Expense): Promise<Expense> {
     } catch (error: any) {
         serviceError.statusCode = 500
         serviceError.displayMessage = "Error occured while adding an expense"
-        serviceError.originalError = error.message ? error.message : ""
+        serviceError.originalError = error.message ? error.message : "Error occured while adding an expense"
 
         if (serviceError.errorType == 1) {
-            serviceError.statusCode = 401;
+            serviceError.statusCode = 400;
             serviceError.displayMessage = `Missing required fields: amount, category, and date`;
             serviceError.originalError = `Missing required fields: amount, category, and date`;
         }
@@ -77,12 +77,12 @@ export async function deleteAnExpense(expenseId: Number): Promise<Expense> {
 
         serviceError.statusCode = 500
         serviceError.displayMessage = "Error occured while deleting an expense"
-        serviceError.originalError = error.message ? error.message : ""
+        serviceError.originalError = error.message ? error.message : "Error occured while deleting an expense"
         throw serviceError
     }
 }
 
-
+// Added validation for request body
 export async function updateExpenseAmount(expense: Expense, expenseId: Number) {
     const serviceError: ServiceError = new Error(`Failed to update an expense`) as ServiceError
     try {
@@ -94,10 +94,10 @@ export async function updateExpenseAmount(expense: Expense, expenseId: Number) {
     } catch (error: any) {
         serviceError.statusCode = 500
         serviceError.displayMessage = "Error occured while updating an expense"
-        serviceError.originalError = error.message ? error.message : ""
+        serviceError.originalError = error.message ? error.message : "Error occured while updating an expense"
 
         if (serviceError.errorType == 1) {
-            serviceError.statusCode = 401;
+            serviceError.statusCode = 400;
             serviceError.displayMessage = `Missing required fields: amount`;
             serviceError.originalError = `Missing required fields: amount`;
         }
